@@ -1,0 +1,11 @@
+
+DROP TABLE IF EXISTS team;
+CREATE TABLE `team` (
+  `id_team` bigint(20) unsigned NOT NULL auto_increment,
+  `loss` char(128) NOT NULL,
+  `name` char(128) NOT NULL,
+  `win` char(128) NOT NULL,
+
+  PRIMARY KEY  (`id_team`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ 

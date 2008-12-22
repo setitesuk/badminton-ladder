@@ -1,0 +1,15 @@
+
+<h2>ladder </h2>
+<form method="post" action="[% model.id_ladder %]">
+ <ul>
+  <li>
+   <label for="last_played">last_played</label>
+   <input type="text" id="last_played" name="last_played" value="[% model.last_played %]" />
+  </li>  <li>
+   <label for="position">position</label>
+   <input type="text" id="position" name="position" value="[% model.position %]" />
+  </li>
+ </ul>
+ <input type="submit" value="Update" />
+</form>
+ 

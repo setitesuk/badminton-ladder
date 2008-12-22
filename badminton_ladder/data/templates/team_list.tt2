@@ -1,0 +1,17 @@
+
+<h2>teams </h2>
+<table id="team_list">
+ <caption>team list</caption>
+ <thead><tr><th>Name</th><th>Played</th><th>Win</th><th>Loss</th></tr></thead>
+ <tbody>
+[% FOREACH team = model.teams %]
+<tr>
+ <td>[% team.name %]</td><td>[% team.played %]</td><td>[% team.win %]</td><td>[% team.loss %]</td>
+ [% FOREACH player = team.players %]<td>[% player.forename %] [% player.surname %][% "," IF !loop.last %]</td>[% END %]
+ <td>[<a href="[% SCRIPT_NAME %]/team/[% team.id_team %]">details</a>]</td>
+</tr>
+[% END %]
+ </tbody>
+</table>
+
+ 

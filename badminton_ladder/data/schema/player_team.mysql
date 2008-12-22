@@ -1,0 +1,16 @@
+
+DROP TABLE IF EXISTS player_team;
+CREATE TABLE `player_team` (
+  `id_player_team` bigint(20) unsigned NOT NULL auto_increment,
+
+  `id_player` bigint(20) unsigned NOT NULL,
+  KEY `player_team_player` (`id_player`),
+  CONSTRAINT `player_team_player` FOREIGN KEY (`id_player`) REFERENCES `player` (`id_player`),
+
+  `id_team` bigint(20) unsigned NOT NULL,
+  KEY `player_team_team` (`id_team`),
+  CONSTRAINT `player_team_team` FOREIGN KEY (`id_team`) REFERENCES `team` (`id_team`),
+
+  PRIMARY KEY  (`id_player_team`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ 

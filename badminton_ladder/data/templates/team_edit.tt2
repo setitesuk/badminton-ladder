@@ -1,0 +1,18 @@
+
+<h2>team </h2>
+<form method="post" action="[% model.id_team %]">
+ <ul>
+  <li>
+   <label for="loss">loss</label>
+   <input type="text" id="loss" name="loss" value="[% model.loss %]" />
+  </li>  <li>
+   <label for="name">name</label>
+   <input type="text" id="name" name="name" value="[% model.name %]" />
+  </li>  <li>
+   <label for="win">win</label>
+   <input type="text" id="win" name="win" value="[% model.win %]" />
+  </li>
+ </ul>
+ <input type="submit" value="Update" />
+</form>
+ 

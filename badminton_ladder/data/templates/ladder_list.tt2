@@ -1,0 +1,16 @@
+
+<h2>ladders </h2>
+<table id="ladder_list">
+ <caption>ladder list</caption>
+ <thead><tr><th>last_played</th><th>position</th></tr></thead>
+ <tbody>
+[% FOREACH ladder = model.ladders %]
+<tr>
+ <td>[% ladder.last_played %]</td><td>[% ladder.position %]</td>
+ <td>[<a href="[% SCRIPT_NAME %]/ladder/[% ladder.id_ladder %]">details</a>]</td>
+</tr>
+[% END %]
+ </tbody>
+</table>
+
+ 

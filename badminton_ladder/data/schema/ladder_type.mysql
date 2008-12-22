@@ -1,0 +1,9 @@
+
+DROP TABLE IF EXISTS ladder_type;
+CREATE TABLE `ladder_type` (
+  `id_ladder_type` bigint(20) unsigned NOT NULL auto_increment,
+  `description` char(128) NOT NULL,
+
+  PRIMARY KEY  (`id_ladder_type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ 

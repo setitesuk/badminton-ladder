@@ -1,0 +1,14 @@
+
+DROP TABLE IF EXISTS ladder;
+CREATE TABLE `ladder` (
+  `id_ladder` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `last_played` date NOT NULL,
+  `position` int(11) NOT NULL,
+  `id_team` bigint(20) unsigned NOT NULL,
+  `id_ladder_type` bigint(20) unsigned NOT NULL,
+  PRIMARY KEY (`id_ladder`),
+  KEY `ladder_team` (`id_team`),
+  KEY `ladder_ladder_type` (`id_ladder_type`),
+  CONSTRAINT `ladder_team` FOREIGN KEY (`id_team`) REFERENCES `team` (`id_team`),
+  CONSTRAINT `ladder_ladder_type` FOREIGN KEY (`id_ladder_type`) REFERENCES `ladder_type` (`id_ladder_type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -1,0 +1,11 @@
+
+DROP TABLE IF EXISTS player;
+CREATE TABLE `player` (
+  `id_player` bigint(20) unsigned NOT NULL auto_increment,
+  `email` char(128) NOT NULL,
+  `forename` char(128) NOT NULL,
+  `surname` char(128) NOT NULL,
+
+  PRIMARY KEY  (`id_player`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ 

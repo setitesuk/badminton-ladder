@@ -1,0 +1,7 @@
+
+<h1>Badminton Ladder</h1>
+<ul id="actions">
+ <li>[<a href="[% SCRIPT_NAME %]/player_team/">List player_teams</a>]</li> <li>[<a href="[% SCRIPT_NAME %]/ladder/">List ladders</a>]</li> <li>[<a href="[% SCRIPT_NAME %]/player/">List players</a>]</li> <li>[<a href="[% SCRIPT_NAME %]/team/">List teams</a>]</li> <li>[<a href="[% SCRIPT_NAME %]/ladder_type/">List ladder_types</a>]</li>
+ <li>[<a href="[% SCRIPT_NAME %]/player_team/;add">Add player_team</a>]</li> <li>[<a href="[% SCRIPT_NAME %]/ladder/;add">Add ladder</a>]</li> <li>[<a href="[% SCRIPT_NAME %]/player/;add">Add player</a>]</li> <li>[<a href="[% SCRIPT_NAME %]/team/;add">Add team</a>]</li> <li>[<a href="[% SCRIPT_NAME %]/ladder_type/;add">Add ladder_type</a>]</li>
+</ul>
+ 

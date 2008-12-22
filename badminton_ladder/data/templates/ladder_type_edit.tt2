@@ -1,0 +1,12 @@
+
+<h2>ladder_type </h2>
+<form method="post" action="[% model.id_ladder_type %]">
+ <ul>
+  <li>
+   <label for="description">description</label>
+   <input type="text" id="description" name="description" value="[% model.description %]" />
+  </li>
+ </ul>
+ <input type="submit" value="Update" />
+</form>
+ 

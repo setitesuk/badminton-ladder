@@ -1,0 +1,16 @@
+
+<h2>player_teams </h2>
+<table id="player_team_list">
+ <caption>player_team list</caption>
+ <thead><tr></tr></thead>
+ <tbody>
+[% FOREACH player_team = model.player_teams %]
+<tr>
+ 
+ <td>[<a href="[% SCRIPT_NAME %]/player_team/[% player_team.id_player_team %]">details</a>]</td>
+</tr>
+[% END %]
+ </tbody>
+</table>
+
+ 

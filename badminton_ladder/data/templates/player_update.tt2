@@ -1,0 +1,7 @@
+
+<h2>player </h2>
+player updated ok. Click <a href="[% SCRIPT_NAME %]/player/[% model.id_player %]">here</a> to continue.
+<script type="text/javascript">
+ document.location.href="[% SCRIPT_NAME %]/player/[% model.id_player %]";
+</script>
+ 

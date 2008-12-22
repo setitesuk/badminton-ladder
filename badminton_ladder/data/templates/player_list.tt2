@@ -1,0 +1,16 @@
+
+<h2>players </h2>
+<table id="player_list">
+ <caption>player list</caption>
+ <thead><tr><th>email</th><th>forename</th><th>surname</th></tr></thead>
+ <tbody>
+[% FOREACH player = model.players %]
+<tr>
+ <td>[% player.email %]</td><td>[% player.forename %]</td><td>[% player.surname %]</td>
+ <td>[<a href="[% SCRIPT_NAME %]/player/[% player.id_player %]">details</a>]</td>
+</tr>
+[% END %]
+ </tbody>
+</table>
+
+ 

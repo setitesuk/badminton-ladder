@@ -1,0 +1,15 @@
+
+[<a href="[% model.id_ladder_type %];edit">Edit</a>]
+<h2>ladder_type </h2>
+<table>
+ <tr><th>description</th><td>[% model.description %]</td></tr>
+
+</table>
+
+[% PROCESS ladder_list.tt2 %]
+
+
+
+ [<a href="[% SCRIPT_NAME %]/ladder/;add?id_ladder_type=[% model.id_ladder_type %]">Add ladder</a>]
+
+ 

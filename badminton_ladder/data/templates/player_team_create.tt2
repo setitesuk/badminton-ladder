@@ -1,0 +1,7 @@
+
+<h2>player_team </h2>
+player_team saved ok. Click <a href="[% SCRIPT_NAME %]/player_team/[% model.id_player_team %]">here</a> to continue.
+<script type="text/javascript">
+ document.location.href="[% SCRIPT_NAME %]/player_team/[% model.id_player_team %]";
+</script>
+ 

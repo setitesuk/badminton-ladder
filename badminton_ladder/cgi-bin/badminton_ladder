@@ -1,0 +1,32 @@
+#!/Users/ajb/dev/bin/perl -wT
+#!/usr/bin/perl -T
+
+use warnings;
+use strict;
+use lib qw(lib);
+use ClearPress::controller;
+
+use badminton_ladder::util;
+use badminton_ladder::view::error;
+
+use badminton_ladder::view::player_team;
+use badminton_ladder::model::player_team;
+use badminton_ladder::view::ladder;
+use badminton_ladder::model::ladder;
+use badminton_ladder::view::player;
+use badminton_ladder::model::player;
+use badminton_ladder::view::team;
+use badminton_ladder::model::team;
+use badminton_ladder::view::ladder_type;
+use badminton_ladder::model::ladder_type;
+
+our $VERSION = do { my ($r) = q$LastChangedRevision: 279 $ =~ /(\d+)/smx; $r; };
+
+main();
+0;
+
+sub main {
+  my $util = badminton_ladder::util->new();
+  ClearPress::controller->handler($util);
+}
+ 
