@@ -62,7 +62,7 @@ sub generate_team {
     $player_2_team->save();
     1;
   } or do {
-    confess $EVAL_ERROR;
+    croak $EVAL_ERROR;
   };
   return 1;
 }
