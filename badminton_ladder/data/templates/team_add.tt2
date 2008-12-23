@@ -1,17 +1,30 @@
 
-<h2>team </h2>
+<h2>Add Team </h2>
 <form method="post" action="[% SCRIPT_NAME %]/team/">
- <ul>  <li>
-   <label for="loss">loss</label>
-   <input type="text" id="loss" name="loss" value="[% model.loss %]" />
-  </li>  <li>
-   <label for="name">name</label>
-   <input type="text" id="name" name="name" value="[% model.name %]" />
-  </li>  <li>
-   <label for="win">win</label>
-   <input type="text" id="win" name="win" value="[% model.win %]" />
-  </li>
- </ul>
+ <fieldset>
+   <legend>Name</legend>
+   <label for="name">Name</label>
+   <input type="text" id="name" name="name" />
+ </fieldset>
+
+ <fieldset>
+  <legend>Player 1</legend>
+   <label for="forename_1">Forename</label>
+   <input type="text" id="forename_1" name="forename_1" />
+   <label for="surname_1">Surname</label>
+   <input type="text" id="surname_1" name="surname_1" />
+   <label for="email_1">Email</label>
+   <input type="text" id="email_1" name="email_1" />
+ </fieldset>
+ <fieldset>
+  <legend>Player 2</legend>
+   <label for="forename_2">Forename</label>
+   <input type="text" id="forename_2" name="forename_2" />
+   <label for="surname_2">Surname</label>
+   <input type="text" id="surname_2" name="surname_2" />
+   <label for="email_2">Email</label>
+   <input type="text" id="email_2" name="email_2" />
+ </fieldset>
  <input type="submit" value="Add" />
 </form>
  

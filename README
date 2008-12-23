@@ -1,0 +1,1 @@
+clearpress --new badminton_ladder 'player(forename,surname,email) team(name,win,loss) player_team->player player_team->team player_team() ladder->team ladder->ladder_type ladder(position:int,last_played:date) ladder_type(description)' -driver
