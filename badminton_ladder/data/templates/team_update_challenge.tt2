@@ -1,0 +1,6 @@
+<h2>Challenge Issued </h2>
+Challenge issued ok. Click <a href="[% SCRIPT_NAME %]/ladder">here</a> to continue.
+<script type="text/javascript">
+ document.location.href="[% SCRIPT_NAME %]/ladder";
+</script>
+ 

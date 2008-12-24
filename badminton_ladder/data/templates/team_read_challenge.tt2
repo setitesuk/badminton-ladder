@@ -1,0 +1,9 @@
+<h2>Challenge [% model.name %]</h2>
+<form method="post" action="[% SCRIPT_NAME %]/team/[% model.id_team %];update_challenge">
+  <fieldset>
+    <legend>Issue A Challenge</legend>
+    <label for="challenger">Challenger</label>
+    <select id="id_challenger" name="id_challenger" />[% FOREACH team = model.non_challenged_teams %]<option value="[% team.id_team %]">[% team.name %]</option>[% END %]
+    <input type="submit" value="Make Challenge" />
+  </fieldset>
+</form>
