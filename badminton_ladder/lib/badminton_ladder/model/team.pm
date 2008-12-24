@@ -17,7 +17,7 @@ __PACKAGE__->has_all();
 __PACKAGE__->has_many_through('player|player_team');
 
 sub fields {
-  return qw(id_team loss name win);
+  return qw(id_team loss name win challenged_by);
 }
 
 sub played {
@@ -80,6 +80,45 @@ sub generate_team {
     croak $EVAL_ERROR;
   };
   return 1;
+}
+
+sub non_challenged_teams {
+  my ($self) = @_;
+  if (!$self->{non_challenged_teams}) {
+    my $q = q{SELECT id_team, name FROM team WHERE challenged_by IS NULL};
+    my $dbh = $self->util->dbh();
+    my $sth = $dbh->prepare($q);
+    $sth->execute();
+    while (my $r = $sth->fetchrow_hashref()) {
+      push @{$self->{non_challenged_teams}}, $r;
+    }
+  }
+  return $self->{non_challenged_teams};
+}
+
+sub save_challenge {
+  my ($self) = @_;
+  my $util = $self->util();
+  my $pkg = ref$self;
+  my $challenger = $pkg->new({
+    util => $util,
+    id_team => $self->challenged_by(),
+    challenged_by => $self->id_team(),
+  });
+  $challenger->save();
+  return 1;
+}
+
+
+sub challenger {
+  my ($self, $id_team) = @_;
+  $id_team ||= $self->challenged_by();
+  warn $id_team;
+  if (!$id_team) {
+    return q{};
+  }
+  my $pkg = ref$self;
+  return $pkg->new({ util => $self->util(), id_team => $id_team})->name();
 }
 
 1;

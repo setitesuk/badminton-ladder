@@ -3,7 +3,7 @@
 <table id="main_ladder_list">
  <caption>Main Ladder</caption>
  <thead>
-   <tr><th>Position</th><th>Team</th><th>Last Played</th></tr>
+   <tr><th>Position</th><th>Team</th><th>Last Played</th><th>Under Challenge</th></tr>
  </thead>
  <tbody>
 [% FOREACH row = model.main_ladder %]
@@ -11,6 +11,7 @@
  <td>[% row.position %]</td>
  <td>[% row.name %]</td>
  <td>[% row.last_played %]</td>
+ <td>[% IF row.challenged_by %][% model.challenger(row.challenged_by) %][% ELSE %]<a href="[% SCRIPT_NAME %]/team/challenge/[% row.id_team %]">Challenge</a>[% END %]</td>
  <td>[<a href="[% SCRIPT_NAME %]/team/[% row.id_team %]"> Team details</a>]</td>
 </tr>
 [% END %]
@@ -20,7 +21,7 @@
 <table id="challenging_ladder_list">
  <caption>Challenging Ladder</caption>
  <thead>
-   <tr><th>Position</th><th>Team</th><th>Last Played</th></tr>
+   <tr><th>Position</th><th>Team</th><th>Last Played</th><th>Under Challenge</th></tr>
  </thead>
  <tbody>
 [% FOREACH row = model.challenging_ladder %]
@@ -28,6 +29,7 @@
  <td>[% row.position %]</td>
  <td>[% row.name %]</td>
  <td>[% row.last_played %]</td>
+ <td>[% IF row.challenged_by %][% model.challenger(row.challenged_by) %][% ELSE %]<a href="[% SCRIPT_NAME %]/team/challenge/[% row.id_team %]">Challenge</a>[% END %]</td>
  <td>[<a href="[% SCRIPT_NAME %]/team/[% row.id_team %]"> Team details</a>]</td>
 </tr>
 [% END %]
@@ -36,7 +38,7 @@
 <table id="out_of_ladder_list">
  <caption>Out Of Ladder</caption>
  <thead>
-   <tr><th>Position</th><th>Team</th><th>Last Played</th></tr>
+   <tr><th>Position</th><th>Team</th><th>Last Played</th><th>Under Challenge</th></tr>
  </thead>
  <tbody>
 [% FOREACH row = model.out_of_ladder %]
@@ -44,6 +46,7 @@
  <td>[% row.position %]</td>
  <td>[% row.name %]</td>
  <td>[% row.last_played %]</td>
+ <td>[% IF row.challenged_by %][% model.challenger %][% ELSE %]<a href="[% SCRIPT_NAME %]/team/challenge/[% row.id_team %]">Challenge</a>[% END %]</td>
  <td>[<a href="[% SCRIPT_NAME %]/team/[% row.id_team %]"> Team details</a>]</td>
 </tr>
 [% END %]

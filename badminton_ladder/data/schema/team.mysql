@@ -5,7 +5,6 @@ CREATE TABLE `team` (
   `loss` char(128) NOT NULL,
   `name` char(128) NOT NULL,
   `win` char(128) NOT NULL,
-
   PRIMARY KEY  (`id_team`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
- 
+ALTER TABLE `badminton_ladder`.`team` ADD COLUMN `challenged_by` BIGINT(20) UNSIGNED DEFAULT NULL AFTER `win`;

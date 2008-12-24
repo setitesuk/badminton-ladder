@@ -15,7 +15,7 @@ sub fields {
 
 sub get_ladders {
   my ($self, $ladder_description) = @_;
-  my $q = q{SELECT t.name AS name, l.last_played AS last_played, l.position AS position, t.id_team AS id_team
+  my $q = q{SELECT t.name AS name, l.last_played AS last_played, l.position AS position, t.id_team AS id_team, t.challenged_by AS challenged_by
             FROM team t, ladder l, ladder_type lt
             WHERE lt.description = ?
             AND   lt.id_ladder_type = l.id_ladder_type
@@ -52,6 +52,11 @@ sub out_of_ladder {
     $self->{out_of_ladder} = $self->get_ladders('Out of Ladder');
   }
   return $self->{out_of_ladder};
+}
+
+sub challenger {
+  my ($self, $id_team) = @_;
+  return badminton_ladder::model::team->new({util => $self->util})->challenger($id_team);
 }
 
 1;
