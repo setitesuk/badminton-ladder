@@ -2,7 +2,7 @@
 package badminton_ladder::model::player_team;
 use strict;
 use warnings;
-use base qw(ClearPress::model);
+use base qw(badminton_ladder::model);
 use badminton_ladder::model::team;
 use badminton_ladder::model::player;
 
@@ -12,9 +12,7 @@ __PACKAGE__->has_many([qw()]);
 __PACKAGE__->has_all();
 
 sub fields {
-  return qw(id_player_team
-	    id_player id_team 
-	    );
+  return qw(id_player_team id_player id_team);
 }
 
 sub all_teams {

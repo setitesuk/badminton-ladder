@@ -2,11 +2,13 @@
 package badminton_ladder::model::team;
 use strict;
 use warnings;
-use base qw(ClearPress::model);
+use base qw(badminton_ladder::model);
 use Carp qw(carp cluck croak confess);
 use English qw{-no_match_vars};
 use badminton_ladder::model::player;
 use badminton_ladder::model::player_team;
+use badminton_ladder::model::ladder;
+use badminton_ladder::model::ladder_type;
 
 __PACKAGE__->mk_accessors(__PACKAGE__->fields());
 __PACKAGE__->has_a([qw()]);
@@ -15,15 +17,15 @@ __PACKAGE__->has_all();
 __PACKAGE__->has_many_through('player|player_team');
 
 sub fields {
-  return qw(id_team
-	    
-	    loss name win );
+  return qw(id_team loss name win);
 }
 
 sub played {
   my ($self) = @_;
   if (!$self->{played}) {
-    $self->{played} = $self->loss() + $self->win();
+    my $loss = $self->loss || 0;
+    my $win = $self->win || 0;
+    $self->{played} = $loss + $win;
   }
   return $self->{played};
 }
@@ -60,6 +62,19 @@ sub generate_team {
     });
     $player_1_team->save();
     $player_2_team->save();
+    my $ladder_type = badminton_ladder::model::ladder_type->new({
+      util => $util,
+      description => 'Challenging',
+    });
+    my $date = $self->date_today({type => 'mysql'});
+    my $ladder = badminton_ladder::model::ladder->new({
+      util => $util,
+      id_team => $self->id_team(),
+      id_ladder_type => $ladder_type->id_ladder_type(), 
+	    last_played => $date,
+	    position => 0,
+    });
+    $ladder->create();
     1;
   } or do {
     croak $EVAL_ERROR;

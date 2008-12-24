@@ -1,16 +1,51 @@
 
-<h2>ladders </h2>
-<table id="ladder_list">
- <caption>ladder list</caption>
- <thead><tr><th>last_played</th><th>position</th></tr></thead>
+<h2>Badminton Ladder</h2>
+<table id="main_ladder_list">
+ <caption>Main Ladder</caption>
+ <thead>
+   <tr><th>Position</th><th>Team</th><th>Last Played</th></tr>
+ </thead>
  <tbody>
-[% FOREACH ladder = model.ladders %]
+[% FOREACH row = model.main_ladder %]
 <tr>
- <td>[% ladder.last_played %]</td><td>[% ladder.position %]</td>
- <td>[<a href="[% SCRIPT_NAME %]/ladder/[% ladder.id_ladder %]">details</a>]</td>
+ <td>[% row.position %]</td>
+ <td>[% row.name %]</td>
+ <td>[% row.last_played %]</td>
+ <td>[<a href="[% SCRIPT_NAME %]/team/[% row.id_team %]"> Team details</a>]</td>
 </tr>
 [% END %]
  </tbody>
 </table>
 
- 
+<table id="challenging_ladder_list">
+ <caption>Challenging Ladder</caption>
+ <thead>
+   <tr><th>Position</th><th>Team</th><th>Last Played</th></tr>
+ </thead>
+ <tbody>
+[% FOREACH row = model.challenging_ladder %]
+<tr>
+ <td>[% row.position %]</td>
+ <td>[% row.name %]</td>
+ <td>[% row.last_played %]</td>
+ <td>[<a href="[% SCRIPT_NAME %]/team/[% row.id_team %]"> Team details</a>]</td>
+</tr>
+[% END %]
+ </tbody>
+</table>
+<table id="out_of_ladder_list">
+ <caption>Out Of Ladder</caption>
+ <thead>
+   <tr><th>Position</th><th>Team</th><th>Last Played</th></tr>
+ </thead>
+ <tbody>
+[% FOREACH row = model.out_of_ladder %]
+<tr>
+ <td>[% row.position %]</td>
+ <td>[% row.name %]</td>
+ <td>[% row.last_played %]</td>
+ <td>[<a href="[% SCRIPT_NAME %]/team/[% row.id_team %]"> Team details</a>]</td>
+</tr>
+[% END %]
+ </tbody>
+</table>
