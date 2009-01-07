@@ -1,0 +1,10 @@
+
+DROP TABLE IF EXISTS player;
+CREATE TABLE player (
+  email text,
+  forename text,
+  surname text,
+  id_player integer primary key autoincrement
+);
+
+ 

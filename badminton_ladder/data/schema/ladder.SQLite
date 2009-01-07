@@ -1,0 +1,13 @@
+
+DROP TABLE IF EXISTS ladder;
+CREATE TABLE ladder (
+  last_played date,
+  position int,
+  id_team integer,
+  id_ladder_type integer,
+  id_ladder integer primary key autoincrement
+);
+
+CREATE INDEX ladder_id_team on ladder (id_team);
+CREATE INDEX ladder_id_ladder_type on ladder (id_ladder_type);
+ 

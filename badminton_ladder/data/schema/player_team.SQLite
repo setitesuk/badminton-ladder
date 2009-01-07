@@ -1,0 +1,11 @@
+
+DROP TABLE IF EXISTS player_team;
+CREATE TABLE player_team (
+  id_player integer,
+  id_team integer,
+  id_player_team integer primary key autoincrement
+);
+
+CREATE INDEX player_team_id_player on player_team (id_player);
+CREATE INDEX player_team_id_team on player_team (id_team);
+ 

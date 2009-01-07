@@ -1,0 +1,8 @@
+
+DROP TABLE IF EXISTS ladder_type;
+CREATE TABLE ladder_type (
+  description text,
+  id_ladder_type integer primary key autoincrement
+);
+
+ 

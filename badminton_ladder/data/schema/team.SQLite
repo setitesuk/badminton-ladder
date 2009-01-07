@@ -1,0 +1,11 @@
+
+DROP TABLE IF EXISTS team;
+CREATE TABLE team (
+  challenged_by integer,
+  loss text,
+  name text,
+  win text,
+  id_team integer primary key autoincrement
+);
+
+ 
