@@ -112,13 +112,32 @@ sub save_challenge {
 
 sub challenger {
   my ($self, $id_team) = @_;
-  $id_team ||= $self->challenged_by();
-  warn $id_team;
-  if (!$id_team) {
-    return q{};
+  if (!$self->{challenger}) {
+    $id_team ||= $self->challenged_by();
+
+    if (!$id_team) {
+      return q{};
+    }
+    my $pkg = ref$self;
+    $self->{challenger} = $pkg->new({ util => $self->util(), id_team => $id_team})->name();
   }
-  my $pkg = ref$self;
-  return $pkg->new({ util => $self->util(), id_team => $id_team})->name();
+  return $self->{challenger};
+}
+
+sub challenged_teams {
+  my ($self) = @_;
+  if (!$self->{challenged_teams}) {
+    my $seen = {};
+    foreach my $team ( @{$self->teams()} ) {
+      if ($team->challenged_by()) {
+        if (!$seen->{$team->challenged_by()}) {
+          $seen->{$team->id_team()}++;
+          push @{$self->{challenged_teams}}, $team;
+        }
+      }
+    }
+  }
+  return $self->{challenged_teams};
 }
 
 1;

@@ -1,5 +1,5 @@
 
-<h2>teams </h2>
+<h2>Teams</h2>
 <table id="team_list">
  <caption>team list</caption>
  <thead><tr><th>Name</th><th>Played</th><th>Win</th><th>Loss</th></tr></thead>

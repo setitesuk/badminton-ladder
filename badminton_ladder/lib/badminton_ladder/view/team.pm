@@ -52,5 +52,17 @@ sub update_challenge {
   return 1;
 }
 
+sub update_result {
+  my ($self) = @_;
+  my $cgi = $self->util->cgi();
+  my $model = $self->model();
+  return 1;
+}
+
+sub list_challenges {
+  my ($self) = @_;
+  return 1;
+}
+
 1;
  

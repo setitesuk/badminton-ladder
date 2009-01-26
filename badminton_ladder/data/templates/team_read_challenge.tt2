@@ -3,7 +3,7 @@
   <fieldset>
     <legend>Issue A Challenge</legend>
     <label for="challenger">Challenger</label>
-    <select id="id_challenger" name="id_challenger" />[% FOREACH team = model.non_challenged_teams %]<option value="[% team.id_team %]">[% team.name %]</option>[% END %]
+    <select id="id_challenger" name="id_challenger" />[% FOREACH team = model.non_challenged_teams %][% UNLESS team.id_team == model.id_team %]<option value="[% team.id_team %]">[% team.name %]</option>[% END %][% END %]
     <input type="submit" value="Make Challenge" />
   </fieldset>
 </form>
