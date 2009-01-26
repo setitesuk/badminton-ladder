@@ -1,22 +1,11 @@
 
 [<a href="[% model.id_team %];edit">Edit</a>]
-<h2>team </h2>
+<h2>[% model.name %]</h2>
 <table>
- <tr><th>name</th><td>[% model.name %]</td></tr>
  [% FOREACH player = model.players %]<tr><th></th><td>[% player.forename %] [% player.surname %]</td></tr>[% END %]
  <tr><th>win</th><td>[% model.win %]</td></tr>
  <tr><th>loss</th><td>[% model.loss %]</td></tr>
 
 </table>
-
-[% PROCESS player_team_list.tt2 %]
-
-[% PROCESS ladder_list.tt2 %]
-
-
-
- [<a href="[% SCRIPT_NAME %]/player_team/;add?id_team=[% model.id_team %]">Add player_team</a>]
-
- [<a href="[% SCRIPT_NAME %]/ladder/;add?id_team=[% model.id_team %]">Add ladder</a>]
 
  

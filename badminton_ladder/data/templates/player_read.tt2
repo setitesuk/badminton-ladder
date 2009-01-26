@@ -1,17 +1,7 @@
-
-[<a href="[% model.id_player %];edit">Edit</a>]
-<h2>player </h2>
+<h2>[% model.forename %] [% model.surname %]</h2>
 <table>
- <tr><th>email</th><td>[% model.email %]</td></tr>
- <tr><th>forename</th><td>[% model.forename %]</td></tr>
- <tr><th>surname</th><td>[% model.surname %]</td></tr>
-
+ <tr><th>Forename</th><td>[% model.forename %]</td></tr>
+ <tr><th>Surname</th><td>[% model.surname %]</td></tr>
+ <tr><th>Email</th><td>[% model.email %]</td></tr>
+ <tr><th>Team</th><td>[% model.teams.0.name %]</td></tr>
 </table>
-
-[% PROCESS player_team_list.tt2 %]
-
-
-
- [<a href="[% SCRIPT_NAME %]/player_team/;add?id_player=[% model.id_player %]">Add player_team</a>]
-
- 
