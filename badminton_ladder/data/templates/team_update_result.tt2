@@ -1,0 +1,5 @@
+<h2>Result Processed OK </h2>
+Result Processed ok. Click <a href="[% SCRIPT_NAME %]/ladder">here</a> to continue.
+<script type="text/javascript">
+ document.location.href="[% SCRIPT_NAME %]/ladder";
+</script>

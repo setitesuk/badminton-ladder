@@ -3,4 +3,3 @@ Challenge issued ok. Click <a href="[% SCRIPT_NAME %]/ladder">here</a> to contin
 <script type="text/javascript">
  document.location.href="[% SCRIPT_NAME %]/ladder";
 </script>
- 

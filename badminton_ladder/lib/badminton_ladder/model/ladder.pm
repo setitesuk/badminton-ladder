@@ -25,7 +25,7 @@ sub get_ladders {
   my $dbh = $self->util->dbh();
   my $sth = $dbh->prepare($q);
   $sth->execute($ladder_description);
-  my $return;
+  my $return = [];
   while (my $row = $sth->fetchrow_hashref()) {
     push @{$return}, $row;
   }

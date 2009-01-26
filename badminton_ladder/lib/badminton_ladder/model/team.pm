@@ -140,50 +140,43 @@ sub challenged_teams {
   return $self->{challenged_teams};
 }
 
-sub update_challenge {
+sub update_result {
   my ($self, $winner) = @_;
   my $pkg = ref$self;
   my $challenger = $pkg->new({ util => $self->util(), id_team => $self->challenged_by() });
 
-  my $s_ladder = $self->ladder();
+  my $s_ladder = $self->ladders()->[0];
   my $s_position = $s_ladder->position();
   my $s_ladder_type = $s_ladder->ladder_type->description();
 
-  my $c_ladder = $challenger->ladder();
+  my $c_ladder = $challenger->ladders()->[0];
   my $c_position = $c_ladder->position();
   my $c_ladder_type = $c_ladder->ladder_type->description();
 
 
   if ($s_ladder_type eq 'Main' && $c_ladder_type eq 'Main') {
+
     if ($self->id_team() == $winner) {
       if ($s_position > $c_position) {
-        
-      } else {
         $s_ladder->position($c_position);
         $c_ladder->position($s_position);
       }
     } else {
-      if ($s_position > $c_position) {
+      if ($s_position < $c_position) {
         $s_ladder->position($c_position);
         $c_ladder->position($s_position);
-      } else {
-
       }
     }
+
   } else {
 
     my $main_ladder_count = scalar@{$s_ladder->main_ladder()};
-    my $main_ladder_type_id = badminton_ladder::model::ladder_type->new({
-      util => $self->util,
-      description => 'Main',
-    })->id_ladder_type();
-
     if ($s_ladder_type eq 'Main') {
+
       $c_position = $main_ladder_count + 1;
+
       if ($self->id_team() == $winner) {
-        if ($s_position < $c_position) {
-        
-        } else {
+        if ($s_position > $c_position) {
           $s_ladder->position($c_position);
           $c_ladder->position($s_position);
         }
@@ -191,18 +184,15 @@ sub update_challenge {
         if ($s_position < $c_position) {
           $s_ladder->position($c_position);
           $c_ladder->position($s_position);
-        } else {
-
         }
-      
       }
-      $c_ladder->id_ladder_type($main_ladder_type_id);
+
     } elsif ($c_ladder_type eq 'Main') {
+
       $s_position = $main_ladder_count + 1;
+
       if ($challenger->id_team() == $winner) {
-        if ($c_position < $s_position) {
-        
-        } else {
+        if ($c_position > $s_position) {
           $s_ladder->position($c_position);
           $c_ladder->position($s_position);
         }
@@ -210,16 +200,11 @@ sub update_challenge {
         if ($c_position < $s_position) {
           $s_ladder->position($c_position);
           $c_ladder->position($s_position);
-        } else {
-
         }
-      
       }
-      $s_ladder->id_ladder_type($main_ladder_type_id);
-      $s_ladder->save();
+
     } else {
-      $s_ladder->id_ladder_type($main_ladder_type_id);
-      $c_ladder->id_ladder_type($main_ladder_type_id);
+
       if ($self->id_team() == $winner) {
         $s_ladder->position($main_ladder_count + 1);
         $c_ladder->position($main_ladder_count + 2);
@@ -227,6 +212,7 @@ sub update_challenge {
         $c_ladder->position($main_ladder_count + 1);
         $s_ladder->position($main_ladder_count + 2);
       }
+
     }
   }
 
@@ -234,8 +220,18 @@ sub update_challenge {
   $c_ladder->last_played($date);
   $s_ladder->last_played($date);
 
+  my $main_ladder_type_id = badminton_ladder::model::ladder_type->new({
+    util => $self->util,
+    description => 'Main',
+  })->id_ladder_type();
+
+  $s_ladder->id_ladder_type($main_ladder_type_id);
+  $c_ladder->id_ladder_type($main_ladder_type_id);
+
   $self->challenged_by(undef);
   $challenger->challenged_by(undef);
+  $self->save();
+  $challenger->save();
   $s_ladder->save();
   $c_ladder->save();
   return 1;
