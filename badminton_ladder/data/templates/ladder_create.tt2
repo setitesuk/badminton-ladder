@@ -1,7 +1,0 @@
-
-<h2>ladder </h2>
-ladder saved ok. Click <a href="[% SCRIPT_NAME %]/ladder/[% model.id_ladder %]">here</a> to continue.
-<script type="text/javascript">
- document.location.href="[% SCRIPT_NAME %]/ladder/[% model.id_ladder %]";
-</script>
- 

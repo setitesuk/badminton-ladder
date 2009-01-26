@@ -56,6 +56,8 @@ sub update_result {
   my ($self) = @_;
   my $cgi = $self->util->cgi();
   my $model = $self->model();
+  my $winner = $cgi->param('winner');
+  $model->update_challenge($winner);
   return 1;
 }
 
