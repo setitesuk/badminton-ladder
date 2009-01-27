@@ -207,8 +207,8 @@ sub challenged_teams {
 sub update_result {
   my ($self, $winner) = @_;
   my $pkg = ref$self;
-  my $challenger = $pkg->new({ util => $self->util(), id_team => $self->challenged_by() });
 
+  my $challenger = $pkg->new({ util => $self->util(), id_team => $self->challenged_by() });
   my $s_ladder = $self->ladders()->[0];
   my $s_position = $s_ladder->position();
   my $s_ladder_type = $s_ladder->ladder_type->description();
@@ -300,12 +300,37 @@ sub update_result {
   $s_ladder->id_ladder_type($main_ladder_type_id);
   $c_ladder->id_ladder_type($main_ladder_type_id);
 
+  if ($self->id_team() == $winner) {
+    $self->increment_wins();
+    $challenger->increment_losses();
+  } else {
+    $self->increment_losses();
+    $challenger->increment_wins();
+  }
+
   $self->challenged_by(undef);
   $challenger->challenged_by(undef);
+
   $self->update();
   $challenger->update();
+
   $s_ladder->save();
   $c_ladder->save();
+
+  return 1;
+}
+
+sub increment_wins {
+  my ($self) = @_;
+  $self->read();
+  $self->{win}++;
+  return 1;
+}
+
+sub increment_losses {
+  my ($self) = @_;
+  $self->read();
+  $self->{loss}++;
   return 1;
 }
 

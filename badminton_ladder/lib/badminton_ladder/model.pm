@@ -1,11 +1,14 @@
+############
+# Author: setitesuk
+# 
 package badminton_ladder::model;
 use strict;
 use warnings;
 use base qw(ClearPress::model);
 use Readonly;
 
-Readonly our $CORRECT_THE_YEAR     => 1900;
-Readonly our $MONTHS               => [qw(Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec)];
+Readonly::Scalar our $CORRECT_THE_YEAR     => 1900;
+Readonly::Scalar our $MONTHS               => [qw(Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec)];
 
 __PACKAGE__->mk_accessors(__PACKAGE__->fields());
 
