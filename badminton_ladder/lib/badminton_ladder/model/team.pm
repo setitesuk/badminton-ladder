@@ -96,17 +96,62 @@ sub generate_team {
 }
 
 sub non_challenged_teams {
-  my ($self) = @_;
-  if (!$self->{non_challenged_teams}) {
-    my $q = q{SELECT id_team, name FROM team WHERE challenged_by IS NULL};
-    my $dbh = $self->util->dbh();
-    my $sth = $dbh->prepare($q);
-    $sth->execute();
-    while (my $r = $sth->fetchrow_hashref()) {
-      push @{$self->{non_challenged_teams}}, $r;
+  my ($self, $id_challenged_team) = @_;
+  $id_challenged_team ||= $self->id_team();
+  
+  if (!$id_challenged_team) {
+    croak 'No team is about to be challenged';
+  }
+  
+  my $q = q{SELECT id_team, name FROM team WHERE challenged_by IS NULL};
+  my $dbh = $self->util->dbh();
+  my $sth = $dbh->prepare($q);
+  $sth->execute();
+  my $return = [];
+  while (my $r = $sth->fetchrow_hashref()) {
+    push @{$return}, $r;
+  }
+  return $return;
+}
+
+sub eligible_challenge {
+  my ($self, $id_challenger) = @_;
+  my $id_team = $self->id_team();
+warn $id_team.q{:}.$id_challenger;
+  if ($id_challenger == $id_team) {
+    return 0;
+  }
+
+  my $q = q{SELECT position FROM ladder WHERE id_team = ?};
+  my $dbh = $self->util->dbh();
+  my $ref = $dbh->selectall_arrayref($q, {}, $id_team);
+  my ($challengee_position, $challenger_position);
+  if ($ref && scalar@{$ref}) {
+    $challengee_position = $ref->[0]->[0];
+  }
+  $ref = $dbh->selectall_arrayref($q, {}, $id_challenger);
+  if ($ref && scalar@{$ref}) {
+    $challenger_position = $ref->[0]->[0];
+  }
+warn $challengee_position.q{:}.$challenger_position;
+  if ($challengee_position == 0
+        ||
+      ($challenger_position && $challengee_position > $challenger_position)
+        ||
+      ($challenger_position > 0 && ($challengee_position >= ($challenger_position - 3)))
+     ) {
+    return 1;
+  }
+  
+  if ($challenger_position == 0) {
+    my $main_ladder = badminton_ladder::model::ladder->new({ util => $self->util() })->main_ladder();
+    my $number_of_teams = scalar@{$main_ladder};
+    my $challenge_upto = $number_of_teams - 2;
+    if ($challengee_position >= $challenge_upto) {
+      return 1;
     }
   }
-  return $self->{non_challenged_teams};
+  return 0;
 }
 
 sub save_challenge {

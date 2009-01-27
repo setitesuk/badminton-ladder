@@ -43,8 +43,8 @@ sub update_challenge {
   my $cgi = $self->util->cgi();
   my $model = $self->model();
   my $challenger = $cgi->param('id_challenger');
-  if ($model->id_team() == $challenger) {
-    croak 'You cannot challenge yourself! Click back to continue.';
+  if (!$model->eligible_challenge($challenger)) {
+    croak 'You cannot make this challenge. You can only challenge someone upto 3 places above you in the main ladder, or anyone who is not in the ladder';
   }
   $model->challenged_by($challenger);
   $model->save();
