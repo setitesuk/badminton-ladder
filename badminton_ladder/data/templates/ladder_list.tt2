@@ -46,7 +46,7 @@
  <td>[% row.position %]</td>
  <td>[% row.name %]</td>
  <td>[% row.last_played %]</td>
- <td>[% IF row.challenged_by %][% model.challenger %][% ELSE %]<a href="[% SCRIPT_NAME %]/team/challenge/[% row.id_team %]">Challenge</a>[% END %]</td>
+ <td>[% IF row.challenged_by %][% model.challenger(row.challenged_by) %][% ELSE %]<a href="[% SCRIPT_NAME %]/team/challenge/[% row.id_team %]">Challenge</a>[% END %]</td>
  <td>[<a href="[% SCRIPT_NAME %]/team/[% row.id_team %]"> Team details</a>]</td>
 </tr>
 [% END %]

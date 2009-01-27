@@ -20,6 +20,19 @@ sub fields {
   return qw(id_team loss name win challenged_by);
 }
 
+sub init {
+  my ($self) = @_;
+  if ($self->{name} && !$self->{id_team}) {
+    my $q = q{SELECT id_team FROM team WHERE name = ?};
+    my $dbh = $self->util->dbh();
+    my $ref = $dbh->selectall_arrayref($q, {}, $self->name());
+    if ($ref) {
+      $self->{id_team} = $ref->[0]->[0];
+    }
+  }
+  return 1;
+}
+
 sub played {
   my ($self) = @_;
   if (!$self->{played}) {
@@ -179,11 +192,15 @@ sub update_result {
         if ($s_position > $c_position) {
           $s_ladder->position($c_position);
           $c_ladder->position($s_position);
+        } else {
+          $c_ladder->position($c_position);
         }
       } else {
         if ($s_position < $c_position) {
           $s_ladder->position($c_position);
           $c_ladder->position($s_position);
+        } else {
+          $c_ladder->position($c_position);
         }
       }
 
@@ -195,11 +212,15 @@ sub update_result {
         if ($c_position > $s_position) {
           $s_ladder->position($c_position);
           $c_ladder->position($s_position);
+        } else {
+          $s_ladder->position($s_position);
         }
       } else {
         if ($c_position < $s_position) {
           $s_ladder->position($c_position);
           $c_ladder->position($s_position);
+        } else {
+          $s_ladder->position($s_position);
         }
       }
 
@@ -230,8 +251,8 @@ sub update_result {
 
   $self->challenged_by(undef);
   $challenger->challenged_by(undef);
-  $self->save();
-  $challenger->save();
+  $self->update();
+  $challenger->update();
   $s_ladder->save();
   $c_ladder->save();
   return 1;
