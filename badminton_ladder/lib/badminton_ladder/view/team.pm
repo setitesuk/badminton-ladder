@@ -1,4 +1,3 @@
-
 package badminton_ladder::view::team;
 use strict;
 use warnings;

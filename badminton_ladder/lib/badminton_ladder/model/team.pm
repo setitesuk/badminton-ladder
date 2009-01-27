@@ -1,4 +1,3 @@
-
 package badminton_ladder::model::team;
 use strict;
 use warnings;
@@ -9,6 +8,13 @@ use badminton_ladder::model::player;
 use badminton_ladder::model::player_team;
 use badminton_ladder::model::ladder;
 use badminton_ladder::model::ladder_type;
+use Readonly;
+
+Readonly::Scalar our $CHALLENGE_PLACES_ABOVE_YOU => 3;
+Readonly::Scalar our $ACCOUNT_FOR_ALL_NON_MAIN_TEAMS_ARE_LAST => 1;
+Readonly::Scalar our $OUT_OF_MAIN_LADDER_POSITION => 0;
+Readonly::Scalar our $DEFAULT_NO_OF_LOSSES => 0;
+Readonly::Scalar our $DEFAULT_NO_OF_WINS => 0;
 
 __PACKAGE__->mk_accessors(__PACKAGE__->fields());
 __PACKAGE__->has_a([qw()]);
@@ -36,8 +42,8 @@ sub init {
 sub played {
   my ($self) = @_;
   if (!$self->{played}) {
-    my $loss = $self->loss || 0;
-    my $win = $self->win || 0;
+    my $loss = $self->loss || $DEFAULT_NO_OF_LOSSES;
+    my $win = $self->win || $DEFAULT_NO_OF_WINS;
     $self->{played} = $loss + $win;
   }
   return $self->{played};
@@ -85,7 +91,7 @@ sub generate_team {
       id_team => $self->id_team(),
       id_ladder_type => $ladder_type->id_ladder_type(), 
 	    last_played => $date,
-	    position => 0,
+	    position => $OUT_OF_MAIN_LADDER_POSITION,
     });
     $ladder->create();
     1;
@@ -117,7 +123,7 @@ sub non_challenged_teams {
 sub eligible_challenge {
   my ($self, $id_challenger) = @_;
   my $id_team = $self->id_team();
-warn $id_team.q{:}.$id_challenger;
+
   if ($id_challenger == $id_team) {
     return 0;
   }
@@ -133,20 +139,20 @@ warn $id_team.q{:}.$id_challenger;
   if ($ref && scalar@{$ref}) {
     $challenger_position = $ref->[0]->[0];
   }
-warn $challengee_position.q{:}.$challenger_position;
-  if ($challengee_position == 0
+
+  if ($challengee_position == $OUT_OF_MAIN_LADDER_POSITION
         ||
       ($challenger_position && $challengee_position > $challenger_position)
         ||
-      ($challenger_position > 0 && ($challengee_position >= ($challenger_position - 3)))
+      ($challenger_position > $OUT_OF_MAIN_LADDER_POSITION && ($challengee_position >= ($challenger_position - $CHALLENGE_PLACES_ABOVE_YOU)))
      ) {
     return 1;
   }
   
-  if ($challenger_position == 0) {
+  if ($challenger_position == $OUT_OF_MAIN_LADDER_POSITION) {
     my $main_ladder = badminton_ladder::model::ladder->new({ util => $self->util() })->main_ladder();
-    my $number_of_teams = scalar@{$main_ladder};
-    my $challenge_upto = $number_of_teams - 2;
+    my $number_of_teams = scalar@{$main_ladder} + $ACCOUNT_FOR_ALL_NON_MAIN_TEAMS_ARE_LAST;
+    my $challenge_upto = $number_of_teams - $CHALLENGE_PLACES_ABOVE_YOU;
     if ($challengee_position >= $challenge_upto) {
       return 1;
     }
@@ -231,7 +237,7 @@ sub update_result {
     my $main_ladder_count = scalar@{$s_ladder->main_ladder()};
     if ($s_ladder_type eq 'Main') {
 
-      $c_position = $main_ladder_count + 1;
+      $c_position = $main_ladder_count + $ACCOUNT_FOR_ALL_NON_MAIN_TEAMS_ARE_LAST;
 
       if ($self->id_team() == $winner) {
         if ($s_position > $c_position) {
@@ -251,7 +257,7 @@ sub update_result {
 
     } elsif ($c_ladder_type eq 'Main') {
 
-      $s_position = $main_ladder_count + 1;
+      $s_position = $main_ladder_count + $ACCOUNT_FOR_ALL_NON_MAIN_TEAMS_ARE_LAST;
 
       if ($challenger->id_team() == $winner) {
         if ($c_position > $s_position) {
@@ -272,11 +278,11 @@ sub update_result {
     } else {
 
       if ($self->id_team() == $winner) {
-        $s_ladder->position($main_ladder_count + 1);
-        $c_ladder->position($main_ladder_count + 2);
+        $s_ladder->position($main_ladder_count + $ACCOUNT_FOR_ALL_NON_MAIN_TEAMS_ARE_LAST);
+        $c_ladder->position($main_ladder_count + $ACCOUNT_FOR_ALL_NON_MAIN_TEAMS_ARE_LAST + $ACCOUNT_FOR_ALL_NON_MAIN_TEAMS_ARE_LAST);
       } else {
-        $c_ladder->position($main_ladder_count + 1);
-        $s_ladder->position($main_ladder_count + 2);
+        $c_ladder->position($main_ladder_count + $ACCOUNT_FOR_ALL_NON_MAIN_TEAMS_ARE_LAST);
+        $s_ladder->position($main_ladder_count + $ACCOUNT_FOR_ALL_NON_MAIN_TEAMS_ARE_LAST + $ACCOUNT_FOR_ALL_NON_MAIN_TEAMS_ARE_LAST);
       }
 
     }
@@ -302,7 +308,6 @@ sub update_result {
   $c_ladder->save();
   return 1;
 }
-
 
 1;
  
