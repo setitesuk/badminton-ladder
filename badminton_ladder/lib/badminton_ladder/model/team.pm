@@ -213,7 +213,7 @@ sub challenged_teams {
   return $self->{challenged_teams};
 }
 
-sub update_result {
+sub update_result { ## no critic (Subroutines::ProhibitExcessComplexity)
   my ($self, $winner) = @_;
   my $pkg = ref$self;
 

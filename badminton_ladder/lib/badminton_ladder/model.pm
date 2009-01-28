@@ -25,7 +25,7 @@ sub fields {
 sub date_today {
   my ($self, $arg_ref) = @_;
   my $type = $arg_ref->{type};
-  my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
+  my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time); ## no critic (CodeLayout::ProhibitParensWithBuiltins)
   my $human_month = $MONTHS->[$mon];
   $mon++;
   $mon = sprintf '%02d', $mon;

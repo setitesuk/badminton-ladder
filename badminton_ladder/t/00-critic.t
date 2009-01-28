@@ -26,8 +26,9 @@ if($EVAL_ERROR) {
 
 } else {
   Test::Perl::Critic->import(
-			     -severity => 1,
-			     -exclude => ['tidy','ValuesAndExpressions::ProhibitImplicitNewlines'],
+			      -severity => 1,
+			      -exclude => ['tidy','ValuesAndExpressions::ProhibitImplicitNewlines'],
+            -profile => 't/perlcriticrc',
 			    );
   all_critic_ok();
 }
