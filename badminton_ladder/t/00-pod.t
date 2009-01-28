@@ -1,10 +1,9 @@
 #########
-# Author:        rmp
-# Maintainer:    $Author: ajb $
-# Created:       2007-10
-# Last Modified: $Date: 2009-01-09 15:23:14 +0000 (Fri, 09 Jan 2009) $
-# Id:            $Id: 00-pod.t 3909 2009-01-09 15:23:14Z ajb $
-# $HeadURL: svn+ssh://svn.internal.sanger.ac.uk/repos/svn/new-pipeline-dev/sra/branches/prerelease-8.0/t/00-pod.t $
+# Author:        zerojinx
+# Maintainer:    $Author$
+# Last Modified: $Date$
+# Id:            $Id$
+# $HeadURL$
 #
 use strict;
 use warnings;

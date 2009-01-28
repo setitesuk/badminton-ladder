@@ -1,3 +1,10 @@
+#########
+# Author:        zerojinx
+# Maintainer:    $Author$
+# Last Modified: $Date$
+# Id:            $Id$
+# $HeadURL$
+#
 use Test::More;
 use strict;
 use warnings;

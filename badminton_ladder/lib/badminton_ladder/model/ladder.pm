@@ -1,9 +1,21 @@
+#########
+# Author:        setitesuk
+# Maintainer:    $Author$
+# Last Modified: $Date$
+# Id:            $Id$
+# $HeadURL$
+#
 
 package badminton_ladder::model::ladder;
 use strict;
 use warnings;
 use base qw(badminton_ladder::model);
 use DateTime;
+use Readonly;
+
+our $VERSION = 1;
+
+Readonly::Scalar our $DAYS_BEFORE_DROPPING_OUT_OF_LADDER => 42;
 
 __PACKAGE__->mk_accessors(__PACKAGE__->fields());
 __PACKAGE__->has_a([qw(team ladder_type )]);
@@ -62,8 +74,8 @@ sub assess_positions {
   my $ladders = $self->main_ladder();
   my $dt = DateTime->now();
   $dt->set_time_zone('UTC');
-  $dt->subtract( days => 42 );
-  warn$dt;
+  $dt->subtract( days => $DAYS_BEFORE_DROPPING_OUT_OF_LADDER );
+
   my $drop_outs = [];
   my $out_of_ladder_type_id = badminton_ladder::model::ladder_type->new({
     util => $self->util(),
@@ -98,4 +110,3 @@ sub assess_positions {
 }
 
 1;
- 

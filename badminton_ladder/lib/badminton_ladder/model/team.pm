@@ -1,3 +1,10 @@
+#########
+# Author:        setitesuk
+# Maintainer:    $Author$
+# Last Modified: $Date$
+# Id:            $Id$
+# $HeadURL$
+#
 package badminton_ladder::model::team;
 use strict;
 use warnings;
@@ -9,6 +16,8 @@ use badminton_ladder::model::player_team;
 use badminton_ladder::model::ladder;
 use badminton_ladder::model::ladder_type;
 use Readonly;
+
+our $VERSION = 1;
 
 Readonly::Scalar our $CHALLENGE_PLACES_ABOVE_YOU => 3;
 Readonly::Scalar our $ACCOUNT_FOR_ALL_NON_MAIN_TEAMS_ARE_LAST => 1;
@@ -89,7 +98,7 @@ sub generate_team {
     my $ladder = badminton_ladder::model::ladder->new({
       util => $util,
       id_team => $self->id_team(),
-      id_ladder_type => $ladder_type->id_ladder_type(), 
+      id_ladder_type => $ladder_type->id_ladder_type(),
 	    last_played => $date,
 	    position => $OUT_OF_MAIN_LADDER_POSITION,
     });
@@ -335,4 +344,3 @@ sub increment_losses {
 }
 
 1;
- 

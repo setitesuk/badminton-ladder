@@ -1,9 +1,8 @@
 #########
-# Author:        rmp
-# Last Modified: $Date: 2009-01-09 15:23:14 +0000 (Fri, 09 Jan 2009) $
-# Id:            $Id: 00-critic.t 3909 2009-01-09 15:23:14Z ajb $
-# Source:        $Source$
-# $HeadURL: svn+ssh://svn.internal.sanger.ac.uk/repos/svn/new-pipeline-dev/sra/branches/prerelease-8.0/t/00-critic.t $
+# Author:        zerojinx
+# Last Modified: $Date$
+# Id:            $Id$
+# $HeadURL$
 #
 package critic;
 use strict;

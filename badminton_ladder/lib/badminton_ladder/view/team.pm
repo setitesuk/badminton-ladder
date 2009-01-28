@@ -1,9 +1,18 @@
+#########
+# Author:        setitesuk
+# Maintainer:    $Author$
+# Last Modified: $Date$
+# Id:            $Id$
+# $HeadURL$
+#
 package badminton_ladder::view::team;
 use strict;
 use warnings;
 use base qw(ClearPress::view);
 use Carp;
 use English qw{-no_match_vars};
+
+our $VERSION = 1;
 
 sub create {
   my ($self) = @_;
@@ -66,4 +75,4 @@ sub list_challenges {
 }
 
 1;
- 
+
