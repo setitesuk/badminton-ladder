@@ -23,6 +23,11 @@ sub fields {
   return qw(id_player email forename surname);
 }
 
+sub full_name {
+  my ($self) = @_;
+  return $self->forename().q{ }.$self->surname();
+}
+
 1;
 __END__
 
@@ -46,11 +51,15 @@ badminton_ladder::model::player
 
 =head2 date_today - returns a date string. May be reuested as mysql for yyyy-mm-dd, else returns a human readable date dd mon yyyy
 
-  my $sDate = $oDerivedClass->date_today({type => 'mysql|human'});
+  my $sDate = $oPlayer->date_today({type => 'mysql|human'});
 
 =head2 human_date - returns a string dd mon yyyy from a given date string
 
-  my $sDate = $oDerivedClass->human_date({mysql_date => 'yyyy-mm-dd'});
+  my $sDate = $oPlayer->human_date({mysql_date => 'yyyy-mm-dd'});
+
+=head2 full_name - returns a string with the forename and surname concatenated together
+
+  my $sFullName = $oPlayer->full_name();
 
 =head1 DIAGNOSTICS
 

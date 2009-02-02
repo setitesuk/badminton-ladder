@@ -124,6 +124,7 @@ sub non_challenged_teams {
   $sth->execute();
   my $return = [];
   while (my $r = $sth->fetchrow_hashref()) {
+    next if ($r->{id_team} == $id_challenged_team);
     push @{$return}, $r;
   }
   return $return;

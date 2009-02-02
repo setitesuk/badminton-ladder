@@ -8,12 +8,10 @@
 package t::util;
 use strict;
 use warnings;
-use base qw(npg::util Exporter);
+use base qw(badminton_ladder::util);
 use t::dbh;
 use Carp;
-use npg::model::user;
 use DateTime;
-use Website::Utilities::Profiler;
 use CGI;
 use English qw(-no_match_vars);
 use Test::More;
@@ -88,12 +86,7 @@ sub load_fixtures {
   }
 
   $self->log('Loading data/schema.txt');
-  my $cmd = sprintf q(cat data/schema.txt | mysql -u%s -P%s %s -h%s %s),
-                    $self->dbuser(),
-		    $self->dbport(),
-		    $self->dbpass()?"-p@{[$self->dbpass()]}":q(),
-		    $self->dbhost(),
-		    $self->dbname();
+  my $cmd = sprintf q(cat data/schema.txt | sqlite3 badminton_ladder_test);
 
   $self->log("Executing: $cmd");
   open my $fh, q(-|), $cmd or croak $ERRNO;

@@ -4,7 +4,9 @@ CREATE TABLE ladder_type (
   id_ladder_type integer primary key autoincrement
 );
 
-insert into ladder_type(id_ladder_type,description) values (1,'Out of Ladder'), (2,'Challenging'), (3,'Main');
+insert into ladder_type(id_ladder_type,description) values (1,'Out of Ladder');
+insert into ladder_type(id_ladder_type,description) values (2,'Challenging');
+insert into ladder_type(id_ladder_type,description) values (3,'Main');
 
 DROP TABLE IF EXISTS player;
 CREATE TABLE player (
