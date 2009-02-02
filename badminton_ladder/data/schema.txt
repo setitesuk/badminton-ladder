@@ -1,0 +1,46 @@
+DROP TABLE IF EXISTS ladder_type;
+CREATE TABLE ladder_type (
+  description text,
+  id_ladder_type integer primary key autoincrement
+);
+
+insert into ladder_type(id_ladder_type,description) values (1,'Out of Ladder'), (2,'Challenging'), (3,'Main');
+
+DROP TABLE IF EXISTS player;
+CREATE TABLE player (
+  email text,
+  forename text,
+  surname text,
+  id_player integer primary key autoincrement
+);
+
+DROP TABLE IF EXISTS team;
+CREATE TABLE team (
+  challenged_by integer,
+  loss text,
+  name text,
+  win text,
+  id_team integer primary key autoincrement
+);
+
+DROP TABLE IF EXISTS ladder;
+CREATE TABLE ladder (
+  last_played date,
+  position int,
+  id_team integer,
+  id_ladder_type integer,
+  id_ladder integer primary key autoincrement
+);
+
+CREATE INDEX ladder_id_team on ladder (id_team);
+CREATE INDEX ladder_id_ladder_type on ladder (id_ladder_type);
+
+DROP TABLE IF EXISTS player_team;
+CREATE TABLE player_team (
+  id_player integer,
+  id_team integer,
+  id_player_team integer primary key autoincrement
+);
+
+CREATE INDEX player_team_id_player on player_team (id_player);
+CREATE INDEX player_team_id_team on player_team (id_team);

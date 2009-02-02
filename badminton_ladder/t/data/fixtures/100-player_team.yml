@@ -1,0 +1,25 @@
+---
+  - id_player_team: 1
+    id_player: 1
+    id_team: 1
+  - id_player_team: 2
+    id_player: 2
+    id_team: 1
+  - id_player_team: 3
+    id_player: 3
+    id_team: 2
+  - id_player_team: 4
+    id_player: 4
+    id_team: 2
+  - id_player_team: 5
+    id_player: 5
+    id_team: 3
+  - id_player_team: 6
+    id_player: 6
+    id_team: 3
+  - id_player_team: 7
+    id_player: 7
+    id_team: 4
+  - id_player_team: 8
+    id_player: 8
+    id_team: 4

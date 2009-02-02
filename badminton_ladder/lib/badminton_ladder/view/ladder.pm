@@ -16,6 +16,7 @@ our $VERSION = 1;
 sub list {
   my ($self) = @_;
   $self->model->assess_positions();
+#  warn $SCRIPT_NAME;
   return 1;
 }
 

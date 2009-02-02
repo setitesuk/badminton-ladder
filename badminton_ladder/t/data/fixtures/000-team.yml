@@ -1,0 +1,21 @@
+---
+  - id_team: 1
+    loss: 0
+    name: Top Dogs
+    win: 3
+    challenged_by:
+  - id_team: 2
+    loss: 1
+    name: Second Best
+    win: 2
+    challenged_by:
+  - id_team: 3
+    loss: 2
+    name: Third Base
+    win: 1
+    challenged_by:
+  - id_team: 4
+    loss: 3
+    name: Fourth of July
+    win: 0
+    challenged_by:

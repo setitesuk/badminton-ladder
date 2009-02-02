@@ -1,11 +1,7 @@
-
 [<a href="[% model.id_team %];edit">Edit</a>]
 <h2>[% model.name %]</h2>
 <table>
  [% FOREACH player = model.players %]<tr><th></th><td>[% player.forename %] [% player.surname %]</td></tr>[% END %]
  <tr><th>win</th><td>[% model.win %]</td></tr>
  <tr><th>loss</th><td>[% model.loss %]</td></tr>
-
 </table>
-
- 

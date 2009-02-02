@@ -1,0 +1,33 @@
+---
+  - id_player: 1
+    email: first.player
+    forename: first
+    surname: player
+  - id_player: 2
+    email: second.player
+    forename: second
+    surname: player
+  - id_player: 3
+    email: third.player
+    forename: third
+    surname: player
+  - id_player: 4
+    email: fourth.player
+    forename: fourth
+    surname: player
+  - id_player: 5
+    email: fifth.player
+    forename: fifth
+    surname: player
+  - id_player: 6
+    email: sixth.player
+    forename: sixth
+    surname: player
+  - id_player: 7
+    email: seventh.player
+    forename: seventh
+    surname: player
+  - id_player: 8
+    email: eighth.player
+    forename: eighth
+    surname: player

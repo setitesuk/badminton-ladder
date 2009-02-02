@@ -1,4 +1,3 @@
-
 [<a href="[% model.id_ladder %];edit">Edit</a>]
 <h2>ladder </h2>
 <table>
@@ -12,7 +11,3 @@
   <td>[<a href="[% SCRIPT_NAME %]/ladder_type/[% model.id_ladder_type %]">details</a>]</td>
  </tr>
 </table>
-
-
-
- 

@@ -1,4 +1,3 @@
-
 <h2>Add Team </h2>
 <form method="post" action="[% SCRIPT_NAME %]/team/">
  <fieldset>
@@ -27,4 +26,3 @@
  </fieldset>
  <input type="submit" value="Add" />
 </form>
- 

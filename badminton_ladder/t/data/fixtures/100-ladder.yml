@@ -1,0 +1,21 @@
+---
+  - id_ladder: 1
+    id_team: 1
+    id_ladder_type: 3
+    last_played: '2008-01-01'
+    position: 1
+  - id_ladder: 2
+    id_team: 2
+    id_ladder_type: 3
+    last_played: '2008-01-01'
+    position: 2
+  - id_ladder: 3
+    id_team: 3
+    id_ladder_type: 3
+    last_played: '2008-01-01'
+    position: 3
+  - id_ladder: 4
+    id_team: 4
+    id_ladder_type: 3
+    last_played: '2008-01-01'
+    position: 4
