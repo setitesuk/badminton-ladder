@@ -34,6 +34,9 @@ my $util = t::util->new({ fixtures => 1 });
     isnt($t->{name}, 'Third Base', qq{$t->{name} isn't Third Base});
     isnt($t->{id_team}, 3, qq{$t->{id_team} isn't 3});
   }
+  is($model->challenger(3), 'Third Base', '$model->challenger(3) returns name of team with id_team of 3');
+  $model->{challenger} = undef;
+  is($model->challenger() , q{}, 'no challenger returned');
 }
 {
   my $model = badminton_ladder::model::team->new({
@@ -75,6 +78,7 @@ my $util = t::util->new({ fixtures => 1 });
   is($model->loss(), 0, 'no losses');
   is($model->played(), 3, '3 matches played');
   ok($model->eligible_challenge(4), 'Fourth of July can challenge Top Dogs');
+  ok(!$model->eligible_challenge(1), 'Top Dogs cannot challenge Top Dogs');
   ok(!$model->eligible_challenge(5), 'Fifth Element cannot challenge Top Dogs');
 }
 {
@@ -87,5 +91,43 @@ my $util = t::util->new({ fixtures => 1 });
   is($model->loss(), 3, '3 losses');
   is($model->played(), 3, '3 matches played');
   ok($model->eligible_challenge(1), 'Top Dogs can challenge Fourth of July');
-  ok($model->eligible_challenge(1), 'Fifth Element can challenge Fourth of July');
+  ok($model->eligible_challenge(5), 'Fifth Element can challenge Fourth of July');
+  
+  eval {
+    $model->challenged_by(5);
+    $model->save();
+    $model->save_challenge();
+  };
+  is($EVAL_ERROR, q{}, 'challenge saved ok');
+  my $challenger = $model->challenger();
+  is($challenger, 'Fifth Element', 'Fifth Element is the challenger');
+  my $challenger_model = badminton_ladder::model::team->new({ util => $util, name => $challenger });
+  my $challengers_losses = $challenger_model->loss() || 0;
+  $model->{challenger} = 'test';
+  is($model->challenger(), 'test', 'cache works ok for $model->challenger()');
+  my $challenged_teams = $model->challenged_teams();
+  isa_ok($challenged_teams, 'ARRAY', '$model->challenged_teams() - array of teams returned');
+  is($model->challenged_teams(), $challenged_teams, 'cache works ok for $model->challenged_teams()');
+  is(scalar@{$challenged_teams}, 1, '1 team returned, as 2 are currently challenging each other');
+  eval { $model->update_result(4); };
+  is($EVAL_ERROR, q{}, 'no croak on update result');
+  is($model->challenged_by(), undef, 'challenge has completed');
+  is($model->win(), 1, '$model->win() has incremented by 1'); 
+  $challenger_model = badminton_ladder::model::team->new({ util => $util, name => $challenger });
+  is($challenger_model->loss(), $challengers_losses + 1, '$challenger_model->loss() has incremented by 1');
+}
+{
+  my $model = badminton_ladder::model::team->new({
+    util => $util,
+    name => 'Fourth of July',
+  });
+  my $losses = $model->loss();
+  eval {
+    $model->challenged_by(5);
+    $model->save();
+    $model->save_challenge();
+    $model->update_result(5);
+  };
+  is($EVAL_ERROR, q{}, 'no croak on on going through the challenge and update motions');
+  is($model->loss(), $losses + 1, '$model->loss() has incremented by 1');
 }

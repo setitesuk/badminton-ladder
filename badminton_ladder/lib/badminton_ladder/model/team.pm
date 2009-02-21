@@ -332,15 +332,15 @@ sub update_result { ## no critic (Subroutines::ProhibitExcessComplexity)
 
 sub increment_wins {
   my ($self) = @_;
-  $self->read();
-  $self->{win}++;
+  my $win = $self->win() + 1;
+  $self->win($win);
   return 1;
 }
 
 sub increment_losses {
   my ($self) = @_;
-  $self->read();
-  $self->{loss}++;
+  my $loss = $self->loss() + 1;
+  $self->loss($loss);
   return 1;
 }
 

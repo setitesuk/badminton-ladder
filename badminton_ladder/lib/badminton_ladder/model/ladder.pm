@@ -12,6 +12,7 @@ use warnings;
 use base qw(badminton_ladder::model);
 use DateTime;
 use Readonly;
+use badminton_ladder::model::team;
 
 our $VERSION = 1;
 
@@ -72,8 +73,7 @@ sub challenger {
 sub assess_positions {
   my ($self) = @_;
   my $ladders = $self->main_ladder();
-  my $dt = DateTime->now();
-  $dt->set_time_zone('UTC');
+  my $dt = $self->datetime_object_for_now;
   $dt->subtract( days => $DAYS_BEFORE_DROPPING_OUT_OF_LADDER );
 
   my $drop_outs = [];
@@ -106,6 +106,7 @@ sub assess_positions {
     }
     $l_obj->update();
   }
+  $self->{out_of_ladder} = undef;
   return 1;
 }
 
@@ -158,6 +159,12 @@ badminton_ladder::model::ladder
 =item warnings
 
 =item badminton_ladder::model
+
+=item badminton_ladder::model::team
+
+=item badminton_ladder::model::ladder_type
+
+=item DateTime
 
 =item Readonly
 

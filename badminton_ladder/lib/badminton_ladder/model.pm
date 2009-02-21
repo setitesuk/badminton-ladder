@@ -9,6 +9,7 @@ package badminton_ladder::model;
 use strict;
 use warnings;
 use base qw(ClearPress::model);
+use DateTime;
 use Readonly;
 
 our $VERSION = 1;
@@ -50,6 +51,15 @@ sub human_date {
   return "$mday $human_month $year";
 }
 
+sub datetime_object_for_now {
+  my ($self) = @_;
+  if (!$self->{datetime_object_for_now}) {
+    $self->{datetime_object_for_now} = DateTime->now();
+    $self->{datetime_object_for_now}->set_time_zone('UTC');
+  }
+  return $self->{datetime_object_for_now};
+}
+
 1;
 __END__
 
@@ -79,6 +89,8 @@ badminton_ladder::model
 
   my $sDate = $oDerivedClass->human_date({mysql_date => 'yyyy-mm-dd'});
 
+=head2 datetime_object_for_now - returns (and caches) a datetime object that is of now
+
 =head1 DIAGNOSTICS
 
 =head1 CONFIGURATION AND ENVIRONMENT
@@ -92,6 +104,8 @@ badminton_ladder::model
 =item warnings
 
 =item ClearPress::model
+
+=item DateTime
 
 =item Readonly
 
