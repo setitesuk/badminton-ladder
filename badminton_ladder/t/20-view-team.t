@@ -2,7 +2,7 @@ use strict;
 use warnings;
 use Carp;
 use English qw{-no_match_vars};
-use Test::More 'no_plan';#tests => 9;
+use Test::More tests => 17;
 use lib qw{t};
 use t::util;
 use DateTime;
@@ -72,4 +72,48 @@ my $util = t::util->new({ fixtures => 1 });
   eval { $render = $view->render(); };
   is($EVAL_ERROR, q{}, 'no croak on render update_challenge');
   ok($util->test_rendered($render, q{t/data/rendered/badminton_ladder/team/update_challenge.html}), 'rendered update_challenge is correct');
+
+  $cgi->param('winner','2');
+  $view = badminton_ladder::view::team->new({
+    util => $util, model => $model, action => q{update}, aspect => q{update_result},
+  });
+  eval { $render = $view->render(); };
+  is($EVAL_ERROR, q{}, 'no croak on render update_result');
+  ok($util->test_rendered($render, q{t/data/rendered/badminton_ladder/team/update_result.html}), 'rendered update_result is correct');
+}
+{
+  my $cgi = $util->cgi();
+  $cgi->param('forename_1', 'Bruce');
+  $cgi->param('surname_1', 'Willis');
+  $cgi->param('email_1', 'bruce.willis@fith.element');
+  $cgi->param('forename_2', 'Gary');
+  $cgi->param('surname_2', 'Oldman');
+  $cgi->param('email_2', 'gary.oldman@fith.element');
+  my $model = badminton_ladder::model::team->new({
+    util => $util,
+  });
+  my $view = badminton_ladder::view::team->new({
+    util => $util, model => $model, action => q{create},
+  });
+
+  my $render;
+  eval { $render = $view->render(); };
+  is($EVAL_ERROR, q{}, 'no croak on render create - no team name given');
+  ok($util->test_rendered($render, q{t/data/rendered/badminton_ladder/team/create.html}), 'rendered create is correct');
+}
+{
+  my $cgi = $util->cgi();
+  $cgi->param('name', 'Fifth Element');
+
+  my $model = badminton_ladder::model::team->new({
+    util => $util,
+  });
+  my $view = badminton_ladder::view::team->new({
+    util => $util, model => $model, action => q{create},
+  });
+
+  my $render;
+  eval { $render = $view->render(); };
+  is($EVAL_ERROR, q{}, 'no croak on render create - team name given');
+  ok($util->test_rendered($render, q{t/data/rendered/badminton_ladder/team/create.html}), 'rendered create is correct');
 }

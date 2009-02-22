@@ -14,8 +14,7 @@ use Readonly;
 
 our $VERSION = 1;
 
-Readonly::Scalar our $CORRECT_THE_YEAR     => 1900;
-Readonly::Scalar our $MONTHS               => [qw(Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec)];
+Readonly::Scalar our $MONTHS => [qw(Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec)];
 
 __PACKAGE__->mk_accessors(__PACKAGE__->fields());
 
@@ -26,12 +25,14 @@ sub fields {
 sub date_today {
   my ($self, $arg_ref) = @_;
   my $type = $arg_ref->{type};
-  my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time); ## no critic (CodeLayout::ProhibitParensWithBuiltins)
+  my $dt = $self->datetime_object_for_now();
+  my $mon = $dt->month() - 1;
+  my $mday = $dt->day();
+  my $year = $dt->year();
   my $human_month = $MONTHS->[$mon];
   $mon++;
   $mon = sprintf '%02d', $mon;
   $mday = sprintf '%02d', $mday;
-  $year += $CORRECT_THE_YEAR;
   my $return_date = $type eq 'mysql' ? "$year-$mon-$mday"
                   :                    "$mday $human_month $year"
                   ;
@@ -47,6 +48,11 @@ sub human_date {
     $mday = sprintf '%02d', $mday;
     $human_month = $MONTHS->[$mon];
   } else {
+    my $dt = $self->datetime_object_for_now();
+    $mon = $dt->month() - 1;
+    $mday = sprintf '%02d', $dt->day();
+    $year = $dt->year();
+    $human_month = $MONTHS->[$mon];
   }
   return "$mday $human_month $year";
 }
