@@ -310,7 +310,7 @@ sub parse_email {
   $parser->output_to_core(1);
   my $entity = $parser->parse_data($email);
   my $ref    = {
-		annotation => $entity->bodyhandle->as_string(),
+		body       => $entity->bodyhandle->as_string(),
 		subject    => $entity->head->get('Subject', 0),
 		to         => $entity->head->get('To',0)   || undef,
 		cc         => $entity->head->get('Cc',0)   || undef,

@@ -16,6 +16,7 @@ use badminton_ladder::model::player_team;
 use badminton_ladder::model::ladder;
 use badminton_ladder::model::ladder_type;
 use Readonly;
+use MIME::Lite;
 
 our $VERSION = 1;
 
@@ -344,6 +345,36 @@ sub increment_losses {
   return 1;
 }
 
+sub email_a_challenge {
+  my ($self, $challenger) = @_;
+
+  $challenger = badminton_ladder::model::team->new({ util => $self->util(), id_team => $challenger });
+  my $players = $self->players();
+  my $challenging_players = $challenger->players();
+  my @emails;
+
+  foreach my $player (@{$challenging_players}, @{$players}) {
+    push @emails, $player->email();
+  }
+
+  my $to = join q{,}, @emails;
+#  $ENV{PATH} = q{/usr/local/mysql/bin:/opt/local/bin:/opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin};
+  my $email_body = $self->name() . qq{\n\nYou have been challenged by } .
+  $challenger->name() . qq{ to a badminton match.\nIf you wish to decline,} .
+  q{ this will be entered up by the other team as a win to them, and you will lose your placing} .
+  qq{ if you are currently above this team.\n\nThanks - badminton ladder};
+
+  my $msg = MIME::Lite->new(
+		   From          => $emails[0],
+		   To            => $to,
+		   Subject       => 'Badminton Ladder Challenge issued by  ' . $challenger->name(),
+       Data          => $email_body,
+		   'Precedence:' => 'list',
+	);
+	eval { $msg->send(); 1; } or do { croak 'unable to send message: '.$EVAL_ERROR; };
+  return 1;
+}
+
 1;
 __END__
 
@@ -384,6 +415,7 @@ badminton_ladder::model::team
 =head2 played
 =head2 save_challenge
 =head2 update_result
+=head2 email_a_challenge - emails a challenge to $self->id_team from given challenger id
 
 =head1 DIAGNOSTICS
 
@@ -400,6 +432,8 @@ badminton_ladder::model::team
 =item ClearPress::model
 
 =item Readonly
+
+=item MIME::Lite
 
 =back
 

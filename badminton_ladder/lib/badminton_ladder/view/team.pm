@@ -57,6 +57,7 @@ sub update_challenge {
   $model->challenged_by($challenger);
   $model->save();
   $model->save_challenge();
+  $model->email_a_challenge($challenger);
   return 1;
 }
 

@@ -2,7 +2,7 @@ use strict;
 use warnings;
 use Carp;
 use English qw{-no_match_vars};
-use Test::More tests => 17;
+use Test::More tests => 20;
 use lib qw{t};
 use t::util;
 use DateTime;
@@ -69,9 +69,20 @@ my $util = t::util->new({ fixtures => 1 });
   $view = badminton_ladder::view::team->new({
     util => $util, model => $model, action => q{update}, aspect => q{update_challenge},
   });
+  $util->catch_email($model);
   eval { $render = $view->render(); };
   is($EVAL_ERROR, q{}, 'no croak on render update_challenge');
   ok($util->test_rendered($render, q{t/data/rendered/badminton_ladder/team/update_challenge.html}), 'rendered update_challenge is correct');
+  my $parsed_email = $util->parse_email($model->{emails}[0]);
+  my $expected_body = q{Top Dogs
+
+You have been challenged by Second Best to a badminton match.
+If you wish to decline, this will be entered up by the other team as a win to them, and you will lose your placing if you are currently above this team.
+
+Thanks - badminton ladder};
+  is($parsed_email->{body}, $expected_body, 'email body is correct');
+  is($parsed_email->{to}, qq{third.player,fourth.player,first.player,second.player\n}, 'email to is correct');
+  is($parsed_email->{from}, qq{third.player\n}, 'email from is correct');
 
   $cgi->param('winner','2');
   $view = badminton_ladder::view::team->new({

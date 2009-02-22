@@ -2,7 +2,7 @@ use strict;
 use warnings;
 use Carp;
 use English qw{-no_match_vars};
-use Test::More 'no_plan';#tests => 15;
+use Test::More tests => 65;
 use lib qw{t};
 use t::util;
 
@@ -130,4 +130,23 @@ my $util = t::util->new({ fixtures => 1 });
   };
   is($EVAL_ERROR, q{}, 'no croak on on going through the challenge and update motions');
   is($model->loss(), $losses + 1, '$model->loss() has incremented by 1');
+}
+{
+  my $model = badminton_ladder::model::team->new({
+    util => $util,
+    name => 'Fourth of July',
+  });
+  $util->catch_email($model);
+  eval { $model->email_a_challenge(3); };
+  is($EVAL_ERROR, q{}, 'no croak on email creation');
+  my $parsed_email = $util->parse_email($model->{emails}[0]);
+  my $expected_body = q{Fourth of July
+
+You have been challenged by Third Base to a badminton match.
+If you wish to decline, this will be entered up by the other team as a win to them, and you will lose your placing if you are currently above this team.
+
+Thanks - badminton ladder};
+  is($parsed_email->{body}, $expected_body, 'email body is correct');
+  is($parsed_email->{to}, qq{fifth.player,sixth.player,seventh.player,eighth.player\n}, 'email to is correct');
+  is($parsed_email->{from}, qq{fifth.player\n}, 'email from is correct');
 }
