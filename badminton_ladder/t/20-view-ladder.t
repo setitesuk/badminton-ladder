@@ -22,5 +22,5 @@ my $util = t::util->new({ fixtures => 1 });
   my $render;
   eval { $render = $view->render(); };
   is($EVAL_ERROR, q{}, 'no croak on render list');
-  ok($util->test_rendered($render, q{t/data/rendered/badminton_ladder/ladder/list.html}), 'rendered list os correct');
+  ok($util->test_rendered($render, q{t/data/rendered/badminton_ladder/ladder/list.html}), 'rendered list is correct');
 }

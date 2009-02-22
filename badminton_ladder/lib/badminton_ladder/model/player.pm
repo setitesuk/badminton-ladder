@@ -10,6 +10,7 @@ package badminton_ladder::model::player;
 use strict;
 use warnings;
 use base qw(badminton_ladder::model);
+use badminton_ladder::model::team;
 
 our $VERSION = 1;
 
